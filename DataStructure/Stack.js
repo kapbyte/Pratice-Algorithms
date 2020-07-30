@@ -176,3 +176,37 @@ function ResizingStack() {
 		this.array = this.copy;
 	}
 }
+
+//-------------------------------------------------------------------------------------------------------------
+
+// Implement A Max Stack - A Stack With A .max() API 
+function MaxStack() {
+  this.array = [];
+  this.maxArray = [];
+  
+  this.push = function(item) {
+    if (item == null) {
+      return "Client tries to add a null item.";  
+    } else if (this.maxArray.length == 0 || item >= this.maxArray[this.maxArray.length-1]) {
+      this.array.push(item);
+      this.maxArray.push(item);
+    } else {
+      this.array.push(item);
+    }
+  }
+  
+  this.pop = function() {
+    if (this.array.length == 0) {
+      return "Client tries to pop from an empty stack.";
+    } else if (this.array[this.array.length-1] == this.maxArray[this.maxArray.length-1]) {
+      this.maxArray.pop();
+      return this.array.pop();
+    } else {
+      return this.array.pop();  
+    }
+  }
+  
+  this.max = function() {
+    return this.maxArray[this.maxArray.length-1];
+  }
+}

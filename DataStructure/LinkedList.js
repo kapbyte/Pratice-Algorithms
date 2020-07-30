@@ -58,19 +58,19 @@ function SLinkedList() {
     return current.element;
   }
   
-  this.insert = function(index, item) {
-    var current = this.head;
-    var position = 0;
-    var node = new Node(item);
-    while (current.next) {
-      if (position == index) {
+  // this.insert = function(index, item) {
+  //   var current = this.head;
+  //   var position = 0;
+  //   var node = new Node(item);
+  //   while (current.next) {
+  //     if (position == index) {
         
-      } 
-      else {
-        current = current.next;  
-      }
-    }
-  }
+  //     } 
+  //     else {
+  //       current = current.next;  
+  //     }
+  //   }
+  // }
 }
 
 var llist = new SLinkedList();
