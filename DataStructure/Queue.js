@@ -94,7 +94,7 @@ function Queue() {
 // Stack implementation using an array of size k
 function Queue(k) {
 	this.queue = new Array(k);
-	this.maxSize = k;
+	this.queueMaxSize = k;
 	this.front = -1;
 	this.rear = -1;
 	this.count = 0;
@@ -107,8 +107,8 @@ function Queue(k) {
 			this.queue[this.rear] = item;
 			this.count++;
 		}
-		else if (this.rear == this.maxSize - 1) {
-			throw "Client tries to enqueue to a filled queue";
+		else if (this.rear == this.queueMaxSize - 1) {
+			return "Client tries to enqueue to a filled queue";
 		}
 		else {
 			this.rear++;
@@ -120,10 +120,11 @@ function Queue(k) {
 	// Remove the least recently added item (front)
 	this.dequeue = function() {
 		if (this.front == -1 && this.rear == -1) {
-			throw "Client tries to dequeue from an empty queue.";
+			return "Client tries to dequeue from an empty queue.";
 		}
 		else if (this.front == this.rear) {
 			var dequeuedItem = this.queue[this.front];
+			this.queue[this.front] = undefined;
 			this.front = -1;
 			this.rear = -1;
 			this.count--;
@@ -131,6 +132,7 @@ function Queue(k) {
 		}
 		else {
 			var dequeuedItem = this.queue[this.front];
+			this.queue[this.front] = undefined;
 			this.front++;
 			this.count--;
 			return dequeuedItem;
