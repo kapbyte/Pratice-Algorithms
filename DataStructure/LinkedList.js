@@ -4,79 +4,64 @@ function SLinkedList() {
     this.next = null;
   }  
   this.head = null;
-  this.size = 0;
+  this.count = 0;
   
-  this.push_front = function(item) {
+  this.insertFront = function(item) {
     var node = new Node(item);
     if (node.element == null) {
       return "Client tries to add a null item.";  
     } 
     else if (this.head == null) {
       this.head = node;  
+      this.count++;
     }
     else {
       node.next = this.head;
       this.head = node;
+      this.count++;
     }
-    this.size++;
   }
   
-  this.pop_front = function() {
+  this.removefront = function() {
+    if (this.head == null) {
+      return "Client tries to remove front an empty list."; 
+    }
     var popped_item = this.head;
     this.head = this.head.next;
-    this.size--;
+    this.count--;
     return popped_item.element;
   }
   
-  this.count = function() {
-    return this.size;  
-  }
-  
-  this.empty = function() {
-    return this.head == null; 
-  }
-  
-  this.push_back = function(item) {
+  this.insertLast = function(item) {
     let current = this.head;
     let node = new Node(item);
     while (current.next) {
       current = current.next;
     }
     current.next = node;
-    this.size++;
+    this.count++;
   }
-  
-  this.front = function() {
-    return this.head.element;  
-  }
-  
-  this.back = function() {
-    let current = this.head;
-    while (current.next) {
-      current = current.next;  
+
+  this.insertAtPosition = function(item, pos) {
+    if (pos < 0 || pos > this.count) {
+      return "Invalid position";
     }
-    return current.element;
+    else {
+      var current = this.head, i = 1;
+      var node = new Node(item);
+      while (i < pos) {
+        current = current.next;
+        i++;
+      }
+      node.next = current.next;
+      current.next = node;
+    }
   }
-  
-  // this.insert = function(index, item) {
-  //   var current = this.head;
-  //   var position = 0;
-  //   var node = new Node(item);
-  //   while (current.next) {
-  //     if (position == index) {
-        
-  //     } 
-  //     else {
-  //       current = current.next;  
-  //     }
-  //   }
-  // }
 }
 
 var llist = new SLinkedList();
-llist.push_front(5);
-llist.push_front(2);
-llist.push_front(34);
-llist.front();
-llist.back();
-llist.push_back(42);
+llist.insertFront(5);
+llist.insertFront(2);
+llist.insertFront(34);
+llist.insertLast(42);
+llist.insertAtPosition(600, 2);
