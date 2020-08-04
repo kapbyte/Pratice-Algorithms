@@ -31,7 +31,8 @@ function QueueLinkedList() {
 	this.dequeue = function() {
 		if (this.first == null) {
 			return "Client tries to dequeue from an empty queue.";
-		} else {
+    } 
+    else {
 			var poppedItem = this.first.element;
 			this.first = this.first.next;
 			this.count--;

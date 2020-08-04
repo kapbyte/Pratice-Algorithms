@@ -13,7 +13,7 @@ function SLinkedList() {
     } 
     else if (this.head == null) {
       this.head = node;  
-      this.count++;
+      this.count++; 
     }
     else {
       node.next = this.head;
