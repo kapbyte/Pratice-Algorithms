@@ -1,7 +1,10 @@
+
+// Max heap implementation using an array[capacity]
+
 function PriorityQueue(capacity) {
   this.pq = new Array(capacity);
   this.N = 0; // number of elements on pq
-  this.pqMaxSize = capacity - 1; // Allocated pq[0] to null
+  this.pqMaxSize = capacity - 1; // this.pq[0] is not used
   
   /**In a heap, the parent of the node in position k is in position k/2; and, conversely, 
    * the two children of the node in position k are in positions 2k and 2k + 1. 
@@ -23,7 +26,7 @@ function PriorityQueue(capacity) {
   
   this.insert = function(x) {
     if (x == null) {
-			return "Client tries to add a null item to heap";
+      return "Client tries to add a null item to heap";
     }
     else if (this.pqMaxSize == this.N) {
       return "Ooops! Heap is full";
@@ -57,17 +60,17 @@ function PriorityQueue(capacity) {
       if (j < this.N && this.pq[j] < (this.pq[j+1])) {
         j++;
       }
-      
       // Compare bigger child with parent
-      if (this.pq[k] < this.pq[j] == false) {
+      else if (this.pq[k] < this.pq[j] == false) {
         break;  
       }
-      
-      // Swap 
-      var temp = this.pq[k];
-      this.pq[k] = this.pq[j];
-      this.pq[j] = temp;
-      
+      else {
+        // Swap 
+        var temp = this.pq[k];
+        this.pq[k] = this.pq[j];
+        this.pq[j] = temp;
+      }
+
       k = j;
     }
   }
@@ -81,7 +84,7 @@ function PriorityQueue(capacity) {
   }
 }
 
-var priorityQ = new PriorityQueue(5);
+var priorityQ = new PriorityQueue(4);
 priorityQ.delMax();
 priorityQ.insert();
 priorityQ.insert(8);
