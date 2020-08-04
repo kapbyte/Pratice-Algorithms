@@ -1,6 +1,7 @@
 function PriorityQueue(capacity) {
   this.pq = new Array(capacity);
   this.N = 0; // number of elements on pq
+  this.pqMaxSize = capacity - 1; // Allocated pq[0] to null
   
   /**In a heap, the parent of the node in position k is in position k/2; and, conversely, 
    * the two children of the node in position k are in positions 2k and 2k + 1. 
@@ -21,19 +22,31 @@ function PriorityQueue(capacity) {
   } 
   
   this.insert = function(x) {
-    this.N++; // add int starting fron index 1
-    this.pq[this.N] = x;
-    this.swim(this.N);
+    if (x == null) {
+			return "Client tries to add a null item to heap";
+    }
+    else if (this.pqMaxSize == this.N) {
+      return "Ooops! Heap is full";
+    }
+    else {
+      this.N++; // add x starting from index 1
+      this.pq[this.N] = x;
+      this.swim(this.N);
+    }
   }
   
   this.delMax = function() {
-    var maxItem = this.pq[1];
-    this.pq[1] = this.pq[this.N];
-    this.pq[this.N] = null;
-    this.N--;
-    this.sink(1);
-
-    return maxItem;
+    if (this.N == 0) {
+			return "Client tries to delete from an empty heap";
+    }
+    else {
+      var maxItem = this.pq[1];
+      this.pq[1] = this.pq[this.N];
+      this.pq[this.N] = null;
+      this.N--;
+      this.sink(1);
+      return maxItem; 
+    }
   }
   
   this.sink = function(k) {
@@ -58,14 +71,23 @@ function PriorityQueue(capacity) {
       k = j;
     }
   }
+
+  this.isEmpty = function() {
+    return this.N == 0;
+  }
+
+  this.size = function() {
+    return this.N;
+  }
 }
 
 var priorityQ = new PriorityQueue(5);
+priorityQ.delMax();
+priorityQ.insert();
 priorityQ.insert(8);
 priorityQ.insert(9);
 priorityQ.insert(15);
 priorityQ.insert(32);
 priorityQ.delMax();
-priorityQ.delMax();
-priorityQ.insert(74);
-priorityQ.delMax();
+priorityQ.isEmpty();
+priorityQ.size();
