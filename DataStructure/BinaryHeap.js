@@ -40,7 +40,7 @@ function PriorityQueue(capacity) {
   
   this.delMax = function() {
     if (this.N == 0) {
-			return "Client tries to delete from an empty heap";
+      return "Client tries to delete from an empty heap";
     }
     else {
       var maxItem = this.pq[1];
