@@ -1,10 +1,12 @@
+// Node
+function Node(element) {
+  this.element = element;
+  this.next = null;
+}
+
+
 // Queue implementation using a linked list.
 function QueueLinkedList() {
-	var Node = function(element) {
-		this.element = element;
-		this.next = null;
-	}
-
 	this.first = null;
 	this.last = null;
 	this.count = 0;

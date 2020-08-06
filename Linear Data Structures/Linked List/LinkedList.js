@@ -1,8 +1,9 @@
-function SLinkedList() {
-  var Node = function Node(element) {
-    this.element = element;
-    this.next = null;
-  }  
+function Node(element) {
+  this.element = element;
+  this.next = null;
+} 
+
+function SLinkedList() { 
   this.head = null;
   this.count = 0;
   

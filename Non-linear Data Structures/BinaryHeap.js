@@ -1,4 +1,3 @@
-
 // Max heap implementation using an array[capacity]
 
 function PriorityQueue(capacity) {
