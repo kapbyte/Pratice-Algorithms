@@ -3,7 +3,7 @@ function Node(element) {
   this.next = null;
 } 
 
-function SLinkedList() { 
+function LinkedList() { 
   this.head = null;
   this.count = 0;
   
@@ -60,7 +60,7 @@ function SLinkedList() {
   }
 }
 
-var llist = new SLinkedList();
+var llist = new LinkedList();
 llist.insertFront(5);
 llist.insertFront(2);
 llist.insertFront(34);
