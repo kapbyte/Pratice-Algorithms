@@ -4,6 +4,7 @@ function Node(data) {
   this.right = null;
 }
 
+
 function BinarySearchTree() {
   this.root = null;
   
@@ -13,17 +14,18 @@ function BinarySearchTree() {
       this.root = newNode;  
     }
     else {
-      this.root = this.insertNode(this.root, newNode);  
+      this.root = insertNode(this.root, newNode);  
     }
   }
   
-  this.insertNode = function(node, newNode) {
+  // Private method
+  function insertNode(node, newNode) {
     if (newNode.data < node.data) {
       if (node.left == null) {
         node.left = newNode;  
       }  
       else {
-        node.left = this.insertNode(node.left, newNode);  
+        node.left = insertNode(node.left, newNode);  
       }
     }
     else if (newNode.data > node.data) {
@@ -31,7 +33,7 @@ function BinarySearchTree() {
         node.right = newNode;  
       }  
       else {
-        node.right = this.insertNode(node.right, newNode);  
+        node.right = insertNode(node.right, newNode);  
       }
     }
     else {
@@ -54,6 +56,53 @@ function BinarySearchTree() {
       }
     }
     return "Not found";
+  }
+
+  this.findMin = function() {
+    var node = this.root;
+    while (node.left != null) {
+      node = node.left;
+    }
+    return node.data;
+  }
+
+  // L, Root, R
+  this.inOrder = function() {
+    inOrderHelper(this.root);
+  }
+
+  // Private method
+  function inOrderHelper(node) {
+    if (node == null) return;
+    inOrderHelper(node.left);
+    console.log(`${node.data}`);
+    inOrderHelper(node.right);
+  }
+
+  // Root, L, R
+  this.preOrder = function() {
+    preOrderHelper(this.root);
+  }
+
+  // Private method
+  function preOrderHelper(node) {
+    if (node == null) return;
+    console.log(`${node.data}`);
+    preOrderHelper(node.left);
+    preOrderHelper(node.right);
+  }
+
+  // L, R, Root
+  this.postOrder = function() {
+    postOrderHelper(this.root);
+  }
+
+  // Private method
+  function postOrderHelper(node) {
+    if (node == null) return;
+    postOrderHelper(node.left);
+    postOrderHelper(node.right);
+    console.log(`${node.data}`);
   }
 }
 
