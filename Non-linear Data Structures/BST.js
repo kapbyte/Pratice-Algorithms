@@ -4,75 +4,95 @@ function Node(data) {
   this.right = null;
 }
 
-
 function BinarySearchTree() {
   this.root = null;
-  
-  this.insert = function(data) {
-    var newNode = new Node(data);
-    if (this.root == null) {
-      this.root = newNode;  
-    }
-    else {
-      this.root = insertNode(this.root, newNode);  
-    }
+
+  this.put = function(data) {
+    this.root = putHelper(this.root, data);
   }
-  
+                                                                                                                  
   // Private method
-  function insertNode(node, newNode) {
-    if (newNode.data < node.data) {
-      if (node.left == null) {
-        node.left = newNode;  
-      }  
-      else {
-        node.left = insertNode(node.left, newNode);  
-      }
+  function putHelper(node, data) {
+    if (node == null) return new Node(data);
+    if (data < node.data) {
+      node.left = putHelper(node.left, data);
     }
-    else if (newNode.data > node.data) {
-      if (node.right == null) {
-        node.right = newNode;  
-      }  
-      else {
-        node.right = insertNode(node.right, newNode);  
-      }
+    else if (data > node.data) {
+      node.right = putHelper(node.right, data);
     }
     else {
-      return "Node already exists";  
+      return "Node already exists";
     }
     return node;
   }
-  
-  this.search = function(key) {
-    var node = this.root;
-    while (node != null) {
-      if (key < node.data) {
-        node = node.left;  
-      }
-      else if (key > node.data) {
-        node = node.right;
-      }
-      else {
-        return node.data;
-      }
-    }
-    return "Not found";
+
+  this.get = function(key) {
+    return getHelper(this.root, key);
   }
 
-  this.findMin = function() {
-    var node = this.root;
-    while (node.left != null) {
-      node = node.left;
+  function getHelper(node, key) {
+    if (key == null) return "Client calls get() with a null key";
+    if (node == null) return "Not found";
+    if (key < node.data)  {
+      return getHelper(node.left, key);
     }
-    return node.data;
+    else if (key > node.data)  {
+      return getHelper(node.right, key);
+    }
+    else {
+      return node.data;
+    }
+  }
+
+  this.getMin = function() {
+    if (this.root == null) return "Client calls max() on empty tree";
+    return getMinHelper(this.root);
+  }
+
+  function getMinHelper(node) {
+    if (node.left == null) return node;
+    else return getMinHelper(node.left);
+  }
+
+  this.deleteMin = function() {
+    if (this.root == null) return "Client calls deleteMin() with empty tree";
+    return deleteMinHelper(this.root);
+  }
+
+  function deleteMinHelper(node) {
+    if (node.left == null) return node.right;
+    node.left = deleteMinHelper(node.left);
+    return node;
+  }
+
+  this.delete = function(key) {
+    if (key == null) return "Client calls delete() with null key";
+    return deleteHelper(this.root, key);
+  }
+
+  function deleteHelper(node, key) {
+    if (node == null) return null;
+    if (key < node.data) node.left = deleteHelper(node.left, key);
+    else if (key > node.data) node.right = deleteHelper(node.right, key);
+    else {
+      if (node.right == null) return node.left;
+      if (node.left == null) return node.right;
+      var temp = node;
+      node = getMinHelper(temp.right);
+      node.right = deleteMinHelper(temp.right);
+      node.left = temp.left;
+    }
+    return node;
   }
 
   // L, Root, R
   this.inOrder = function() {
-    inOrderHelper(this.root);
+    inOrderHelper(this.root, this.array);
+    return this.array;
   }
 
   // Private method
-  function inOrderHelper(node) {
+  function inOrderHelper(node, array) {
     if (node == null) return;
     inOrderHelper(node.left);
     console.log(`${node.data}`);
@@ -107,9 +127,6 @@ function BinarySearchTree() {
 }
 
 var BST = new BinarySearchTree(); 
-  
-// Inserting nodes to the BinarySearchTree 
-BST.insert(15); 
-BST.insert(25); 
-BST.insert(10); 
-BST.search(10);
+BST.put(15); 
+BST.put(25); 
+BST.put(10);
