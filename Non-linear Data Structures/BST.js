@@ -124,6 +124,15 @@ function BinarySearchTree() {
     postOrderHelper(node.right);
     console.log(`${node.data}`);
   }
+
+  this.height = function() {
+    return heightHelper(this.root);
+  }
+
+  function heightHelper(node) {
+    if (node == null) return -1;
+    return 1 + Math.max(heightHelper(node.left), heightHelper(node.right));
+  }
 }
 
 var BST = new BinarySearchTree(); 
