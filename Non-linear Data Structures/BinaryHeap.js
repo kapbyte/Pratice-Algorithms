@@ -28,13 +28,9 @@ function PriorityQueue(capacity) {
   function swim(k) {
     // Compare newly inserted item (child) against its parent
     while (k > 1 && pq[k] > pq[Math.floor(k/2)]) {
-      // Swap
-      var temp = pq[k]; 
-      pq[k] = pq[Math.floor(k/2)];
-      pq[Math.floor(k/2)] = temp;
-
+      swap(k, Math.floor(k/2));
       k = Math.floor(k/2);
-    }  
+    }
   } 
   
   this.delMax = function() {
@@ -64,14 +60,17 @@ function PriorityQueue(capacity) {
         break;  
       }
       else {
-        // Swap 
-        var temp = pq[k];
-        pq[k] = pq[j];
-        pq[j] = temp;
+        swap(k, j);
       }
 
       k = j;
     }
+  }
+
+  function swap(a, b) {
+    var temp = pq[a];
+    pq[a] = pq[b];
+    pq[b] = temp;
   }
 
   this.isEmpty = function() {
