@@ -13,6 +13,7 @@ function SeparateChainingHashTable(k) {
   var hashTable = new Array(M); // array of chains
 
   this.put = function(key, value) {
+    if (key == null) return "Client calls put(key, value) with null key";
     var i = hash(key);
     for (var node = hashTable[i]; node != null; node = node.next) {
       if (key == node.key) { // Search hit: update value
@@ -25,6 +26,7 @@ function SeparateChainingHashTable(k) {
   }
 
   this.get = function(key) {
+    if (key == null) return "Client calls get(key) with null key";
     var i = hash(key);
     for (var node = hashTable[i]; node != null; node = node.next) {
       if (key == node.key) { // Search hit: return value
@@ -35,7 +37,29 @@ function SeparateChainingHashTable(k) {
     return -1;
   }
 
+  this.delete = function(key) {
+    if (key == null) return "Client calls delete(key) with null key";
+    var i = hash(key);
+    var pre = new Node(-1, -1, this.hashTable[i]); 
+    for (var prev = pre; prev.next != null; prev = prev.next) {
+      if (prev.next.key == key) {
+        prev.next = prev.next.next;
+        break;
+      }
+    }
+    this.hashTable[i] = pre.next;
+  }
+
   function hash(key) {
     return (key.charCodeAt() & 0x7fffffff) % M;
   }
 }
+
+var SCHT = new SeparateChainingHashTable(3);
+SCHT.get("c");
+SCHT.get();
+SCHT.put("hi", "love");
+SCHT.put("code", "house");
+SCHT.put("school", "imt");
+SCHT.put("code", "JS");
+SCHT.get("code");
