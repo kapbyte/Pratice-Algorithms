@@ -12,6 +12,8 @@ function SeparateChainingHashTable(k) {
   var M = k;                    // number of chains
   var hashTable = new Array(M); // array of chains
 
+  // put(key, value) : Insert a (key, value) pair into the HashMap. 
+  // If the value already exists in the HashMap, update the value.
   this.put = function(key, value) {
     if (key == null) return "Client calls put(key, value) with null key";
     var i = hash(key);
@@ -21,10 +23,12 @@ function SeparateChainingHashTable(k) {
         return;
       }
     }
-    // Search miss: set new value
+    // Search miss: set new node
     hashTable[i] = new Node(key, value, hashTable[i]);
   }
 
+  // get(key): Returns the value to which the specified key is mapped, 
+  // or -1 if this map contains no mapping for the key.
   this.get = function(key) {
     if (key == null) return "Client calls get(key) with null key";
     var i = hash(key);
@@ -37,6 +41,7 @@ function SeparateChainingHashTable(k) {
     return -1;
   }
 
+  // remove(key) : Remove the mapping for the value key if this map contains the mapping for the key.
   this.delete = function(key) {
     if (key == null) return "Client calls delete(key) with null key";
     var i = hash(key);
