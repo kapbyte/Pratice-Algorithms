@@ -1,4 +1,4 @@
-function Graph(numOfVertices) {
+function Graph() {
   // adjacency lists ( using Map )
   var adjList = new Map();
 
@@ -17,7 +17,7 @@ function Graph(numOfVertices) {
   }
 
   this.dfs = function(startNode) {
-    // marked[v] = true if v connected to s
+    // marked[v] = true if visited
     var marked = [];
     dfsHelper(startNode, marked);
   }
@@ -34,4 +34,26 @@ function Graph(numOfVertices) {
       }
     }
   }
+
+  this.bfs = function(startNode) {
+    var marked = []; // marked[v] = true if visited
+    var queue = [];
+    queue.push(startNode);
+    marked[startNode] = true;
+
+    while(queue.length) {
+      var vertex = queue.shift();
+
+      // get vertex adjacent neighbours
+      var vertexNeighbours = adjList.get(vertex);
+      
+      for (var i in vertexNeighbours) {
+        if (!marked[vertexNeighbours[i]]) {
+          queue.push(vertexNeighbours[i]);
+          marked[vertexNeighbours[i]] = true;
+        }
+      }
+    }
+  }
+
 }
