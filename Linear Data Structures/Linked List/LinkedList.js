@@ -1,5 +1,5 @@
-function Node(element) {
-  this.element = element;
+function Node(data) {
+  this.data = data;
   this.next = null;
 } 
 
@@ -9,7 +9,7 @@ function LinkedList() {
   
   this.insertFront = function(item) {
     var node = new Node(item);
-    if (node.element == null) {
+    if (node.data == null) {
       return "Client tries to add a null item.";  
     } 
     else if (this.head == null) {
@@ -30,7 +30,7 @@ function LinkedList() {
     var popped_item = this.head;
     this.head = this.head.next;
     this.count--;
-    return popped_item.element;
+    return popped_item.data;
   }
   
   this.insertLast = function(item) {
@@ -58,11 +58,37 @@ function LinkedList() {
       current.next = node;
     }
   }
+
+  this.reverseList = function() {
+    var prevNode = null;
+    var currentNode = this.head, nextNode = this.head;
+    while (nextNode != null) {
+        nextNode = nextNode.next;
+        currentNode.next = prevNode;
+        prevNode = currentNode;
+        currentNode = nextNode;
+    }
+    head = prevNode;
+    return head;
+  };
+
+  this.recursiveReverseList = function() {
+    if (!this.head || !this.head.next) {
+      return this.head;
+    }
+    var tmp = recursiveReverseList(this.head.next);
+    this.head.next.next = this.head;
+    this.head.next = undefined;
+    return tmp;
+  }
 }
 
 var llist = new LinkedList();
 llist.insertFront(5);
 llist.insertFront(2);
 llist.insertFront(34);
-llist.insertLast(42);
-llist.insertAtPosition(600, 2);
+llist.reverseList();
+
+
+//----------------------------------------------------------------------------------------------------
+// Implementation of a CIRCULAR LINKED LIST
