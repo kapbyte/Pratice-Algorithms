@@ -56,39 +56,50 @@ mergeSort([2, 5, 1, 3, 7, 2, 3, 8, 6, 3]);
 
 //------------------------------------------------------------------------------------------------------------------
 // Implemented quicksort algorithm
-function quicksort(a) {
-  sort(a, 0, a.length - 1);
-}
 
-function sort(a, low, high) {
-  if (high <= low) return;
-  let j = partition(a, low, high);
-  sort(a, low, j-1);
-  sort(a, j+1, high);
-}
+function partition(arr, low, high) {
+  let pivot = arr[low];
+  let start = low, end = high;
+  
+  while(start < end) {
 
-function partition(a, low, high) {
-  let i = low, j = high+1
-  while(true) {
-    
-    while (a[++i] < a[lo]) { // find item on left to swap
-      if (i == hi) break;
+    // find item on left to swap
+    while(arr[start] <= pivot) {
+      start++;  
     }
 
-    while (a[lo] < a[--j]) { // find item on right to swap
-      if (j == lo) break;
+    // find item on right to swap
+    while(arr[end] > pivot) {
+      end--;  
     }
 
-    if (i >= j) break;      // check if pointers cross
-    exch(a, i, j);          // swap
+    // check if pointers cross
+    if (start < end) {
+      exch(arr, start, end);
+    }
   }
 
-  exch(a, lo, j);           // swap with partitioning item
-  return j;                 // return index of item now known to be in place
+  exch(arr, low, end);  // swap with partitioning item
+  return end;           // return index of item now known to be in place
 }
 
-function exch(a, i, j) {
-  let temp = i;
-  a[i] = a[j];
-  a[j] = temp;
+function sort(arr, low, high) {
+  if (low < high) {
+    let pivotIndex = partition(arr, low, high);
+    sort(arr, low, pivotIndex-1);
+    sort(arr, pivotIndex+1, high);
+  }
 }
+
+function exch(arr, start, end) {
+  let temp = arr[start];
+  arr[start] = arr[end];
+  arr[end] = temp;
+}
+
+function quicksort(arr) {
+  sort(arr, 0, arr.length-1);
+  return arr;
+}
+
+quicksort([3, 4, 1, 7, 0]);
